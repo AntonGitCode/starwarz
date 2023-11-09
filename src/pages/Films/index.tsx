@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { debounce } from "lodash";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../../components/CharacterCard";
 import { InputSearch } from "../../components/InputSearch";
 
@@ -12,6 +11,12 @@ import { getUrlId } from "../../utils/getUrlId";
 import { Film } from "../../types/Film.types";
 import { SelectButton } from "../../components/SelectButton";
 import { RootState } from "../../store";
+import useDebounce from "../../utils/useDebounce";
+import {
+  IFilmsFavourite,
+  setFilmFavourite,
+} from "../../store/slices/Film.slice";
+import { FILMS_LS } from "../../utils/constants/localStorageKeys";
 
 export default function Films() {
   const [films, setFilms] = useState<Film[]>([]);
@@ -20,13 +25,13 @@ export default function Films() {
     useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const filmsFavourite = useSelector((state: RootState) => state.film);
+  const debouncedOnChange = useDebounce(inputSearch, 450);
+  const dispatch = useDispatch();
 
   const getData = useCallback(async () => {
     try {
       const response = await api.get("films/");
-
       const returnedData = await response.data;
-
       setFilms(returnedData.results);
     } catch {
     } finally {
@@ -36,22 +41,14 @@ export default function Films() {
 
   const getFilteredData = useCallback(async () => {
     try {
-      const response = await api.get(`films/?search=${inputSearch}`);
-
+      const response = await api.get(`films/?search=${debouncedOnChange}`);
       const returnedData = await response.data;
-
       setFilms(returnedData.results);
     } catch {
     } finally {
       setIsLoading(false);
     }
-  }, [inputSearch]);
-
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setInputSearch(event.target.value);
-  }
-
-  const debouncedOnChange = debounce(handleInputChange, 500);
+  }, [debouncedOnChange]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -62,6 +59,23 @@ export default function Films() {
     setIsLoading(true);
     getFilteredData();
   }, [getFilteredData]);
+
+  useEffect(() => {
+    if (!filmsFavourite.length) {
+      const saved = localStorage.getItem(FILMS_LS);
+      if (saved) {
+        const parsed: IFilmsFavourite[] = JSON.parse(saved);
+        parsed.map(({ id, title }: IFilmsFavourite) => {
+          dispatch(setFilmFavourite({ id, title }));
+        });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const serialized = JSON.stringify(filmsFavourite);
+    localStorage.setItem(FILMS_LS, serialized);
+  }, [filmsFavourite]);
 
   return (
     <Container>
@@ -74,7 +88,7 @@ export default function Films() {
           <InputSearch
             type="text"
             placeholder="Type something to find any film"
-            onChange={(event) => debouncedOnChange(event)}
+            onChange={(event) => setInputSearch(event.target.value)}
           />
         )}
 

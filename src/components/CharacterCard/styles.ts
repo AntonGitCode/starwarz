@@ -2,11 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div` 
   width: 40%;
-  // display: inline-block;
-  // position: relative;
-  // transition: all 0.3s ease-in;
   border-radius: 0.5rem;
-  // z-index: 2;
 
   @media screen and (max-width: 1224px) {
     width: 50%;
@@ -20,21 +16,18 @@ export const Container = styled.div`
   }
 
   > button {
-    // color: white;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    // position: absolute;
-    // top: 1rem;
-    // right: 1rem;
+   
 
     border: none;
     background: transparent;
-    // z-index: 9;
 
     svg {
       color: ${({ theme }) => theme.colors.warning.main};
-      // color: darkorange;
+      color: darkorange;
     }
 
     &:hover {
@@ -47,18 +40,12 @@ export const Container = styled.div`
 
   &:hover {
     .card-name {
+      button {
+        background: transparent;
+        color: orange;
+      }
       a {
         position: relative;
-
-        // &::after {
-        //   content: "";
-        //   position: absolute;
-        //   bottom: -2px;
-        //   left: 0;
-        //   width: 100%;
-        //   height: 4px;
-        //   background-color: orange;
-        // }
       }
     }
   }
@@ -73,12 +60,12 @@ export const Container = styled.div`
   }
 
   .card-name {
+    button {
+      background: transparent;
+      color: lightgray;
+      border: none;
+    }
     display: flex;
-    // position: absolute;
-    // left: 0;
-    // bottom: 0;
-    // right: 0;
-    // display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
@@ -88,11 +75,6 @@ export const Container = styled.div`
       color: ${({ theme }) => theme.colors.dark[900]}
       height: 3rem;
       width: 100%;
-      // display: flex;
-      // flex-direction: column;
-      // align-items: center;
-      // justify-content: center;
-      transition: all 0.3s ease-in;
 
       &:hover {
         background-color: black;

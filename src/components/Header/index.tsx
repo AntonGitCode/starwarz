@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdPersonSearch, MdMovie, MdDirectionsCarFilled } from "react-icons/md";
+import { MdPersonSearch, MdMovie } from "react-icons/md";
 import { Container } from "./styles";
 import logo from "/images/logo.svg";
 

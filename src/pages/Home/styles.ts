@@ -13,17 +13,7 @@ export const Container = styled.div`
 
     span {
       position: relative;
-      color: ${({ theme }) => theme.colors.primary.light};
-
-      &::after {
-        content: "";
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background-color: ${({ theme }) => theme.colors.primary.main};
-      }
+      color: ${({ theme }) => theme.colors.primary.light};    
     }
   }
 
@@ -65,11 +55,9 @@ export const Container = styled.div`
   }
 
   .cards {
-    // display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-wrap: nowrap;
-    // margin-top: 2rem;
 
     > div {
       margin: 1rem;
@@ -87,10 +75,6 @@ export const Container = styled.div`
   }
 
   .loading {
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
-    // justify-content: left;
     margin-left: 1rem;
     margin-top: 2rem;
 

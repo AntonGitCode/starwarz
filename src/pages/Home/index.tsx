@@ -16,47 +16,8 @@ import { SelectButton } from "../../components/SelectButton";
 import { RootState } from "../../store";
 import { ICharacterFavourite } from "../../store/slices/Character.slice";
 import { setFavouriteCharacter } from "../../store/slices/Character.slice";
-
-const useDebounce = (value: string, delay: number) => {
-  const [debounceValue, setDebounceValue] = useState<string>(value);
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebounceValue(value);
-    }, delay);
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-  return debounceValue;
-};
-
-// const updateFavouriteItemsLS = (key: string, item: any) => {
-//   console.log(key, item);
-//   let updateFavouriteItems = [];
-//   const saved = localStorage.getItem(key);
-//   if (saved) {
-//     const parsed = JSON.parse(saved);
-//     updateFavouriteItems = [...parsed, item];
-//     const serialized = JSON.stringify(updateFavouriteItems);
-//     localStorage.setItem(key, serialized);
-//   } else {
-//     localStorage.setItem(key, JSON.stringify([item]));
-//   }
-// };
-
-// const removeFavouriteItemsLS = (key: string, item: any) => {
-//   let updateFavouriteItems = [];
-//   const saved = localStorage.getItem(key);
-
-//   if (saved) {
-//     const parsed = JSON.parse(saved);
-//     updateFavouriteItems = parsed.filter(
-//       (parsedItem: any) => parsedItem.name !== item.name
-//     );
-//     const serialized = JSON.stringify(updateFavouriteItems);
-//     localStorage.setItem(key, serialized);
-//   }
-// };
+import useDebounce from "../../utils/useDebounce";
+import { PEOPLE_LS } from "../../utils/constants/localStorageKeys";
 
 export default function Home() {
   const [data, setData] = useState<CompleteDataTypes>();
@@ -110,22 +71,23 @@ export default function Home() {
 
   useEffect(() => {
     if (!favouriteCharacters.length) {
-      const saved = localStorage.getItem("favcharacter");
+      const saved = localStorage.getItem(PEOPLE_LS);
       if (saved) {
-        const parsed = JSON.parse(saved);
-        parsed.map(({ name, id, height, mass, hair_color }: any) => {
-          dispatch(
-            setFavouriteCharacter({ name, id, height, mass, hair_color })
-          );
-        });
+        const parsed: ICharacterFavourite[] = JSON.parse(saved);
+        parsed.map(
+          ({ name, id, height, mass, hair_color }: ICharacterFavourite) => {
+            dispatch(
+              setFavouriteCharacter({ name, id, height, mass, hair_color })
+            );
+          }
+        );
       }
     }
   }, []);
 
   useEffect(() => {
-    console.log("sdcsdcsdc");
-    const serializedState = JSON.stringify(favouriteCharacters);
-    localStorage.setItem("favcharacter", serializedState);
+    const serialized = JSON.stringify(favouriteCharacters);
+    localStorage.setItem(PEOPLE_LS, serialized);
   }, [favouriteCharacters]);
 
   return (

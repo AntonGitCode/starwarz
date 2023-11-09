@@ -8,21 +8,12 @@ export const Container = styled.div`
     span {
       position: relative;
       color: ${({ theme }) => theme.colors.primary.light};
-
-      &::after {
-        content: "";
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background-color: ${({ theme }) => theme.colors.primary.main};
-      }
     }
   }
 
   .header {
-    display: flex;
+    display: grid;
+    gap: 2rem;
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
@@ -43,12 +34,13 @@ export const Container = styled.div`
     .pagination {
       display: flex;
       align-items: center;
-      justify-content: center;
+      margin-top: 2rem;
 
       button + button {
         margin-left: 1rem;
       }
     }
+
 
     .select {
 
@@ -59,11 +51,9 @@ export const Container = styled.div`
   }
     
   .cards {
-    display: flex;
     align-items: center;
     justify-content: flex-start;
-    flex-wrap: wrap;
-    margin-top: 2rem;
+    flex-wrap: nowrap;
 
     > div {
       margin: 1rem;
@@ -81,10 +71,7 @@ export const Container = styled.div`
   }
 
   .loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: left;
+    margin-left: 1rem;
     margin-top: 2rem;
 
     > span {

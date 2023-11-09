@@ -10,14 +10,6 @@ import {
   removeFavoriteFilm,
   setFilmFavourite,
 } from "../../store/slices/Film.slice";
-// import {
-//   removeFavouriteStarship,
-//   setStarshipFavourite,
-// } from "../../store/slices/Starship.slice";
-// import {
-//   removeFavouriteVehicle,
-//   setVehicleFavourite,
-// } from "../../store/slices/Vehicle.slice";
 import { Container } from "./styles";
 
 interface ICardProps {
@@ -27,16 +19,12 @@ interface ICardProps {
   mass?: string;
   hair_color?: string;
   id: string;
-  // type: "characters" | "films";
-  type: "characters" | "films" | "starships" | "vehicles" | "planets";
+  type: "characters" | "films";
   isFavourited: boolean;
-  // updateFavouriteItemsLS: (key: string, item: any) => void;
-  // removeFavouriteItemsLS: (key: string, item: any) => void;
 }
 
 export function Card({
   type,
-  imageUrl,
   name,
   height,
   mass,

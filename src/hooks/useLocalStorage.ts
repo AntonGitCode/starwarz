@@ -1,8 +1,9 @@
+
 import { useEffect, useState } from 'react';
 
 interface ILocalStorage {
   key: string;
-  initialValue: any;
+  initialValue: any;  // attention - any
 }
 
 export function useLocalStorage({ key, initialValue }: ILocalStorage) {

@@ -8,8 +8,6 @@ const store = configureStore({
   reducer: {
     character: characterReducer,
     film: filmReducer,
-    // starship: starshipReducer,
-    // vehicle: vehicleReducer,
   },
 });
 

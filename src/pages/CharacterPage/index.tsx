@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-// import { FaCarAlt, FaSpaceShuttle } from "react-icons/fa";
-// import { MdMovie } from "react-icons/md";
-// import { Loading } from "../../components/Loading";
-// import { useCharacter } from "../../hooks/useCharacter";
+import { MdMovie } from "react-icons/md";
+import { useCharacter } from "../../hooks/useCharacter";
 import { api } from "../../services/api";
 import { Character } from "../../types/Character.type";
 import { getUrlId } from "../../utils/getUrlId";
@@ -11,13 +9,7 @@ import { CharacterContainer, Container } from "./styles";
 
 export default function CharacterPage() {
   const [data, setData] = useState<Character>();
-  // const {
-  //   films,
-  //   homeWorld,
-  //   starships,
-  //   vehicles,
-  //   isLoading: isLoadingCharacter,
-  // } = useCharacter(data);
+  const { films, isLoading: isLoadingCharacter } = useCharacter(data);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { id } = useParams();
 
@@ -55,6 +47,31 @@ export default function CharacterPage() {
 
               <p>
                 Hair color: <span>{data?.hair_color}</span>
+              </p>
+
+              <p>
+                Gender: <span>{data?.gender}</span>
+              </p>
+
+              <p>
+                Eye: <span>{data?.eye_color}</span>
+              </p>
+
+              <p>
+                Skin: <span>{data?.skin_color}</span>
+              </p>
+
+              <p>
+                <ul>
+                  {films.map((film) => (
+                    <li key={film.title}>
+                      <Link to={`/films/${getUrlId(film.url)}`}>
+                        <MdMovie />
+                        {film.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </p>
             </div>
           </div>
